@@ -45,7 +45,7 @@ float lineSensor_c::WeightedLineSensingBangBang(float left, float center, float 
   return proportionOfTotal;
 }
 
-void lineSensor_c::FollowLine() {
+void lineSensor_c::followLine() {
   float left = analogRead( LINE_LEFT_PIN ) - left_bias;
   float center = analogRead( LINE_CENTRE_PIN ) - center_bias;
   float right = analogRead( LINE_RIGHT_PIN ) - right_bias;

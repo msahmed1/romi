@@ -11,7 +11,7 @@ class lineSensor_c {
 
     void begin();
     
-    void FollowLine();
+    void followLine();
 
   private:
     motors_c myMotors;

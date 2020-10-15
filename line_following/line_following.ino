@@ -18,7 +18,7 @@ void setup() {
 
 void loop()
 {
-  lineFollower.FollowLine();
+  lineFollower.followLine();
 
   delay(50);
 }
