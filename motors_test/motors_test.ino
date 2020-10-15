@@ -19,8 +19,8 @@
 // Variables to remember our
 // motor power for Left and Right.
 // Byte stores 0 to 255
-byte l_power;
-byte r_power;
+float l_power;
+float r_power;
 
 // Setup, only runs once when powered on.
 void setup() {
@@ -33,7 +33,7 @@ void setup() {
 
   // Set initial direction for l and r
   // Which of these is foward, or backward?
-  digitalWrite( L_DIR_PIN, HIGH  );
+  digitalWrite( L_DIR_PIN, LOW  );
   digitalWrite( R_DIR_PIN, HIGH );
 
   // Set initial l_power and r_power values.
