@@ -9,9 +9,9 @@ class lineSensor_c {
     lineSensor_c(const motors_c &motors, byte LINE_LEFT, byte LINE_CENTER, byte LINE_RIGHT);
     ~lineSensor_c();
 
-    bool calibrationSequence();
-
-    float WeightedLineSensingBangBang();
+    void begin();
+    
+    void FollowLine();
 
   private:
     motors_c myMotors;
@@ -25,6 +25,8 @@ class lineSensor_c {
     int center_bias = 0;
     int right_bias = 0;
     int sample_count = 0;
+
+    float WeightedLineSensingBangBang(float left, float center, float right);
 };
 
 #endif

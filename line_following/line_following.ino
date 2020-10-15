@@ -4,7 +4,7 @@
 #import "Motors.h";
 
 motors_c myMotors(10, 16, 9, 15);
-lineSensor_c lineFollower(myMotors,A2, A3, A4);
+lineSensor_c lineFollower(myMotors, A2, A3, A4);
 
 void setup() {
   //Initialize serial and wait for port to open:
@@ -12,13 +12,13 @@ void setup() {
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB
   }
+
+  lineFollower.begin();
 }
 
 void loop()
 {
-  if (lineFollower.calibrationSequence()) {
-    Serial.println(lineFollower.WeightedLineSensingBangBang());
-  }
+  lineFollower.FollowLine();
 
   delay(50);
 }

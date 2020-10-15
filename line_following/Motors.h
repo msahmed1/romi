@@ -9,6 +9,10 @@ class motors_c {
     ~motors_c();
 
     steering(float dir);
+    breaks() {
+      analogWrite( L_PWM_PIN, 0 );
+      analogWrite( R_PWM_PIN, 0 );
+    }
 
   private:
     byte L_PWM_PIN;

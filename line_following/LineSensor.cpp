@@ -4,12 +4,15 @@ lineSensor_c::lineSensor_c(const motors_c &motors, byte LINE_LEFT, byte LINE_CEN
   pinMode(LINE_LEFT_PIN, INPUT);
   pinMode(LINE_CENTRE_PIN, INPUT);
   pinMode(LINE_RIGHT_PIN, INPUT);
+
+  //LED indicator
+  pinMode(13, OUTPUT);
 }
 
 lineSensor_c::~lineSensor_c() {}
 
-bool lineSensor_c::calibrationSequence() {
-  if (sample_count < 100) {
+void lineSensor_c::begin() {
+  while (sample_count < 100) {
     //increment sample count
     sample_count++;
 
@@ -31,21 +34,28 @@ bool lineSensor_c::calibrationSequence() {
     right_bias -= right_bias / sample_count;
     right_bias += r_value / sample_count;
 
-    return false;
   }
-  return true;
 }
 
-float lineSensor_c::WeightedLineSensingBangBang() {
-  float left = analogRead( LINE_LEFT_PIN ) - left_bias;
-  float center = analogRead( LINE_CENTRE_PIN ) - center_bias;
-  float right = analogRead( LINE_RIGHT_PIN ) - right_bias;
-
+float lineSensor_c::WeightedLineSensingBangBang(float left, float center, float right) {
   float total = left + center + right;
 
   float proportionOfTotal = left / total - right / total;
 
-  myMotors.steering(proportionOfTotal);
-
   return proportionOfTotal;
+}
+
+void lineSensor_c::FollowLine() {
+  float left = analogRead( LINE_LEFT_PIN ) - left_bias;
+  float center = analogRead( LINE_CENTRE_PIN ) - center_bias;
+  float right = analogRead( LINE_RIGHT_PIN ) - right_bias;
+
+  if (left < 200 && center < 200 && right < 200) {
+    digitalWrite(13, HIGH);
+     myMotors.steering(0);
+    //start sequence to find a line
+  } else {
+    digitalWrite(13, LOW);
+    myMotors.steering(WeightedLineSensingBangBang(left, center, right));
+  }
 }
